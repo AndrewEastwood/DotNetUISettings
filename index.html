@@ -1,82 +1,133 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>DotNET UI Settings by AndrewEastwood</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="DotNET UI Settings : Transfer control&#39;s values into xml settings file" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>DotNET UI Settings</title>
   </head>
+
   <body>
 
-      <header>
-        <h1>DotNET UI Settings</h1>
-        <p>Transfer control&#39;s values into xml settings file</p>
-      </header>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/AndrewEastwood/DotNetUISettings">View on GitHub</a>
 
-      <div id="banner">
-        <span id="logo"></span>
+          <h1 id="project_title">DotNET UI Settings</h1>
+          <h2 id="project_tagline">Transfer control&#39;s values into xml settings file</h2>
 
-        <a href="https://github.com/AndrewEastwood/DotNetUISettings" class="button fork"><strong>View On GitHub</strong></a>
-        <div class="downloads">
-          <span>Downloads:</span>
-          <ul>
-            <li><a href="https://github.com/AndrewEastwood/DotNetUISettings/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/AndrewEastwood/DotNetUISettings/tarball/master" class="button">TAR</a></li>
-          </ul>
-        </div>
-      </div><!-- end banner -->
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/AndrewEastwood/DotNetUISettings/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/AndrewEastwood/DotNetUISettings/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-    <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>If you want to have xml configuration used in your project and you do not like default dotNet Properties functionality hence this might be helpful for you.
+Using this component you will be able to save and restore control's values into standard readable xml file.
+Additionaly it supports mutiple configuration profiles within the single project.</p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>So, how to use this stuff:</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<ol>
+<li><p>Add reference to "components" libarary into your project</p></li>
+<li><p>Create an empty public class</p></li>
+</ol><pre><code>    public class wndSettings
+    {
+    }
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<ol>
+<li>Add inheritance to this class</li>
+</ol><pre><code>    public class wndSettings : components.UI.Windows.wndAppSettings.wndAppSettings
+    {
+    }
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+</code></pre>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<ol>
+<li><p>Refresh your solution explorer and you will see that the created class becomes a form</p></li>
+<li><p>Open the 'wndSettings' in the designer</p></li>
+<li><p>Add textBox control with the following name: "test_textBox1"</p></li>
+<li><p>Add "Save" button, and add onClick handler. Drop the following lines into the onClick handler:</p></li>
+</ol><pre><code>        private void save_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.Close();
+        }
+</code></pre>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<ol>
+<li><p>Make sure that you have the "SaveSettingsOnClose" property enabled for your settings form (wndSettings)</p></li>
+<li><p>Then opend the 'wndSettings' form source add modify it's constructor:</p></li>
+</ol><pre><code>        public wndSettings()
+            : base()
+        {
+            InitializeComponent(); // &lt;==== we must add this to override base settings form with our custom controls and form properties
+        }
+</code></pre>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Alright. We have configured settings window that can save it's own textBox control value into settings file.
+Let's compile our test application and see what happen.
+Once we have the settings window opened type smth into textBox and hit the "Save" button.
+Then navigate into your app directory and you have to see new "config" directory with one file "test.xml".
+If you open this file you have see the following:</p>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<pre><code>&lt;document name="test" version="1.6.1"&gt;
+    &lt;property name="textBox1" value="" /&gt;
+&lt;/document&gt;
+</code></pre>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>The document's name is the same as the file name and related to first part of control name "test_textBox1"; (it's "test")
+Then inside the document there are all proprties related to "test" document.
+If you add another textbox or whatever which name starts with "test_" their values will be added into this "test.xml" document.
+You can have as much as you want documents with control values, just add control that starts with different name, like this "network_proxy", and you will get new file "network.xml" with the one peroperty "proxy"</p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<p>Now we have to configure settings import to our application.
+10. Let's open Program.cs file and add dependencies:</p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<pre><code>using components.Public;
+</code></pre>
+
+<ol>
+<li>And finnaly add this into the "Main" function</li>
+</ol><pre><code>    ApplicationConfiguration.Instance.LoadConfigurationData();
+</code></pre>
+
+<p>Compile your application and enjoy! :)</p>
+
+<p>Control name convention.</p>
+
+<p>You must use the char "<em>" to separate folding blocks of the property. The last part of the name that goes after last "</em>" is the property name. So if you have a textbox control with the name "demo_general_name" then you will get the following:</p>
+
+<pre><code>File name: demo.xml
+&lt;document name="demo" version="1.6.1"&gt;
+    &lt;section name="general"&gt;
+        &lt;property name="textBox1" value="" /&gt;
+    &lt;/section&gt;
+&lt;/document&gt;
+</code></pre>
+
+<p>It's because you have "demo" and "general" and then "name".</p>
       </section>
-      <footer>
-        <p>Project maintained by <a href="https://github.com/AndrewEastwood">AndrewEastwood</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">DotNET UI Settings maintained by <a href="https://github.com/AndrewEastwood">AndrewEastwood</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -87,6 +138,7 @@ $ git checkout gh-pages
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
