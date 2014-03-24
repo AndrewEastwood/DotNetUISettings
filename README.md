@@ -1,5 +1,7 @@
-DotNetUISettings
-================
+DotNET UI Settings
+==================
+
+Simply it's UI to XML :)
 
 If you want to have xml configuration used in your project and you do not prefer default dotNet Properties functionality so this might be helpful for you.
 Using this component you will be able to save and restore control's values into standard readable xml file.
