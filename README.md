@@ -1,4 +1,4 @@
-DotNET UI Settings
+DotNET UI Settings [![Build Status](https://travis-ci.org/AndrewEastwood/DotNetUISettings.svg?branch=master)](https://travis-ci.org/AndrewEastwood/DotNetUISettings)
 ==================
 
 Simply it's UI to XML :)
