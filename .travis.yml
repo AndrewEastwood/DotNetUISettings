@@ -1,3 +1,8 @@
+## Travis CI Integration
+
 language: c
-compiler:
-  - gcc
+
+install:
+  - sudo apt-get install mono-devel mono-gmcs nunit-console
+script:
+  - xbuild testApplication/testApplication.sln
