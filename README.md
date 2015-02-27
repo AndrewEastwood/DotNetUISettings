@@ -1,7 +1,7 @@
 DotNET UI Settings [![Build Status](https://travis-ci.org/AndrewEastwood/DotNetUISettings.svg?branch=master)](https://travis-ci.org/AndrewEastwood/DotNetUISettings)
 ==================
 
-Simply it's UI to XML :)
+this lib converts all controls values into XML and reads xml and populates values into controls when app loads :)
 
 If you want to have xml configuration used in your project and you do not prefer default dotNet Properties functionality so this might be helpful for you.
 Using this component you will be able to save and restore control's values into standard readable xml file.
